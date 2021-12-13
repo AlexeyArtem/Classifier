@@ -8,32 +8,22 @@ namespace Classifier
 {
     class Category
     {
-        private Dictionary<string, int> _pharses;
-        private int _totalTrainingSetCount;
+        private Dictionary<string, int> _parameters;
 
-        public Category(Dictionary<string, int> pharses, string name)
+        public Category(string name, int trainingSetCount, Dictionary<string, int> parameters)
         {
-            _pharses = pharses;
             Name = name;
-        }
-
-        public Category(string name)
-        {
-            _pharses = new Dictionary<string, int>();
-            Name = name;
+            TrainingSetCount = trainingSetCount;
+            _parameters = parameters;
         }
 
         public string Name { get; }
-        public int TotalTrainingSetCount 
-        {
-            get 
-            {
-                var sum = _pharses.Values.Sum();
-                _totalTrainingSetCount = sum > 0 ? sum : 1;
+        public int TrainingSetCount { get; set; }
+        public IReadOnlyDictionary<string, int> Parameters => _parameters;
 
-                return _totalTrainingSetCount;
-            }
+        public void AddParameterValue(string nameParameter, int value)
+        {
+            _parameters[nameParameter] = _parameters[nameParameter] + value;
         }
-        public Dictionary<string, int> Pharses => _pharses;
     }
 }
