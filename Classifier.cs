@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Classifier
+namespace DataClassifier
 {
     class Classifier
     {
@@ -36,6 +36,20 @@ namespace Classifier
 
         }
 
+        public Classifier(List<Category> categories) 
+        {
+            Category firstCategory = categories.FirstOrDefault();
+            _nameParameters = firstCategory.Parameters.Keys.ToList();
+
+            foreach (var c in categories.Where(c => c != firstCategory))
+            {
+                if (!CheckParameters(c.Parameters.Keys))
+                    throw new ArgumentException("В категории классификации отстуствует требуемый параметр");
+            }
+
+            _categories = categories;
+        }
+
         public IReadOnlyCollection<Category> Categories => _categories;
 
         private bool CheckParameters(IEnumerable<string> parameters) 
@@ -51,10 +65,10 @@ namespace Classifier
         public Dictionary<string, double> BayesianClassify(IEnumerable<string> parameters) 
         {
             if(!CheckParameters(parameters))
-                throw new ArgumentException("В категориях классификации отстутствуют параметры с заданным именем");
+                throw new ArgumentException("Входные параметры классификации не соответствуют категориям классификации");
 
             var scores = new Dictionary<string, double>();
-            int allSetsCount = _categories.Sum(c => c.TrainingSetCount);
+            double allSetsCount = _categories.Sum(c => c.TrainingSetCount);
 
             foreach (Category c in _categories)
             {
@@ -62,7 +76,7 @@ namespace Classifier
                 foreach (var parameter in parameters)
                 {
                     //Нахождение апостериорной вероятности
-                    int count = c.Parameters[parameter];
+                    double count = c.Parameters[parameter];
                     result = result * count / c.TrainingSetCount;
                 }
                 scores.Add(c.Name, result);
@@ -74,17 +88,17 @@ namespace Classifier
         public Dictionary<string, double> LinearClassify(IEnumerable<string> parameters)
         {
             if (!CheckParameters(parameters))
-                throw new ArgumentException("В категориях классификации отстутствуют параметры с заданным именем");
+                throw new ArgumentException("Входные параметры классификации не соответствуют категориям классификации");
 
             var scores = new Dictionary<string, double>();
-            int countAllSets = _categories.Sum(c => c.TrainingSetCount);
+            double countAllSets = _categories.Sum(c => c.TrainingSetCount);
 
             foreach (Category c in _categories)
             {
                 double result = 0;
                 foreach (var parameter in parameters)
                 {
-                    int count = c.Parameters[parameter];
+                    double count = c.Parameters[parameter];
                     result += count / c.TrainingSetCount;
                 }
                 scores.Add(c.Name, result);
@@ -115,7 +129,7 @@ namespace Classifier
         public void Train(string name, Dictionary<string, int> trainingSetParameters, int trainingSetCount) 
         {
             if (!CheckParameters(trainingSetParameters.Keys))
-                throw new ArgumentException("В категориях классификации отстутствуют параметры с заданным именем");
+                throw new ArgumentException("Входные параметры классификации не соответствуют категориям классификации");
 
             Category category = GetCategory(name);
             if (category != null) 

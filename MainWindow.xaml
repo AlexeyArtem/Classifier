@@ -1,12 +1,53 @@
-﻿<Window x:Class="Classifier.MainWindow"
+﻿<Window x:Class="DataClassifier.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Classifier"
+        xmlns:local="clr-namespace:DataClassifier"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Классификатор грибоd" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Window.Resources>
+        <Style TargetType="ComboBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="SelectedIndex" Value="0"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <StackPanel x:Name="mainPanel">
+        <Label>Форма шляпки:</Label>
+        <ComboBox>
+            <ComboBoxItem>Колокольная</ComboBoxItem>
+            <ComboBoxItem>Выпуклая</ComboBoxItem>
+            <ComboBoxItem>Плоская</ComboBoxItem>
+            <ComboBoxItem>Яйцевидная</ComboBoxItem>
+            <ComboBoxItem>Вогнутая</ComboBoxItem>
+        </ComboBox>
+        <Label>Поверхность шляпки:</Label>
+        <ComboBox>
+            <ComboBoxItem>Фиброзная</ComboBoxItem>
+            <ComboBoxItem>С выемками</ComboBoxItem>
+            <ComboBoxItem>Гладкая</ComboBoxItem>
+            <ComboBoxItem>Чешуйчатая</ComboBoxItem>
+        </ComboBox>
+        <Label>Запах:</Label>
+        <StackPanel HorizontalAlignment="Center">
+            <CheckBox>Миндальный</CheckBox>
+            <CheckBox>Рыбный</CheckBox>
+            <CheckBox>Мерзкий</CheckBox>
+            <CheckBox>Плесневый</CheckBox>
+            <CheckBox>Резкий</CheckBox>
+            <CheckBox>Анисовый</CheckBox>
+            <CheckBox>Без запаха</CheckBox>
+        </StackPanel>
+        <Label>Крепление пластинок к шляпке:</Label>
+        <ComboBox>
+            <ComboBoxItem>Приросшее</ComboBoxItem>
+            <ComboBoxItem>Свободное</ComboBoxItem>
+        </ComboBox>
+        <Button Width="200" Height="30" Name="btDefineType" Click="btDefineType_Click">Определеить вид</Button>
+        <Label x:Name="labelResult"></Label>
+    </StackPanel>
 </Window>
