@@ -30,7 +30,9 @@ namespace DataClassifier
             try
             {
                 List<Category> categories = null;
-                using (StreamReader r = new StreamReader("data.json"))
+                var path = System.IO.Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "data.json");
+
+                using (StreamReader r = new StreamReader(path))
                 {
                     string json = r.ReadToEnd();
                     categories = JsonConvert.DeserializeObject<List<Category>>(json);
@@ -49,28 +51,34 @@ namespace DataClassifier
             List<string> parameters = new List<string>();
             foreach (var element in mainPanel.Children)
             {
-                if (element is ComboBox comboBox)
-                {
-                    string value = (comboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
-                    parameters.Add(value);
-                }
-                else if (element is StackPanel stackPanel) 
+                if (element is StackPanel stackPanel) 
                 {
                     foreach (var elem in stackPanel.Children)
                     {
-                        if (elem is CheckBox checkBox)
+                        if (elem is ComboBox comboBox)
                         {
-                            if ((bool)checkBox.IsChecked)
+                            string value = (comboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+                            parameters.Add(value);
+                        }
+                        if (elem is StackPanel stackPanel1)
+                        {
+                            foreach (var elem1 in stackPanel1.Children)
                             {
-                                string value = checkBox.Content.ToString();
-                                parameters.Add(value);
-                            }
+                                if(elem1 is CheckBox checkBox)
+                                {
+                                    if ((bool)checkBox.IsChecked)
+                                    {
+                                        string value = checkBox.Content.ToString();
+                                        parameters.Add(value);
+                                    }
+                                }
+                            }     
                         }
                     }
                 }
             }
 
-            labelResult.Content = "Байесовский классификатор: " + GetMax(classifier.BayesianClassify(parameters)) + "\n" +
+            textResult.Text = "Байесовский классификатор: " + GetMax(classifier.BayesianClassify(parameters)) + "\n" +
                                   "Линейный классификатор: " + GetMax(classifier.LinearClassify(parameters));
         
             string GetMax(Dictionary<string, double> res) 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataClassifier"
         mc:Ignorable="d"
-        Title="Классификатор грибоd" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="Классификатор грибов" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Window.Resources>
         <Style TargetType="ComboBox">
             <Setter Property="Width" Value="200"/>
@@ -15,39 +15,96 @@
         <Style TargetType="Label">
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
+        
     </Window.Resources>
-    <StackPanel x:Name="mainPanel">
-        <Label>Форма шляпки:</Label>
-        <ComboBox>
-            <ComboBoxItem>Колокольная</ComboBoxItem>
-            <ComboBoxItem>Выпуклая</ComboBoxItem>
-            <ComboBoxItem>Плоская</ComboBoxItem>
-            <ComboBoxItem>Яйцевидная</ComboBoxItem>
-            <ComboBoxItem>Вогнутая</ComboBoxItem>
-        </ComboBox>
-        <Label>Поверхность шляпки:</Label>
-        <ComboBox>
-            <ComboBoxItem>Фиброзная</ComboBoxItem>
-            <ComboBoxItem>С выемками</ComboBoxItem>
-            <ComboBoxItem>Гладкая</ComboBoxItem>
-            <ComboBoxItem>Чешуйчатая</ComboBoxItem>
-        </ComboBox>
-        <Label>Запах:</Label>
-        <StackPanel HorizontalAlignment="Center">
-            <CheckBox>Миндальный</CheckBox>
-            <CheckBox>Рыбный</CheckBox>
-            <CheckBox>Мерзкий</CheckBox>
-            <CheckBox>Плесневый</CheckBox>
-            <CheckBox>Резкий</CheckBox>
-            <CheckBox>Анисовый</CheckBox>
-            <CheckBox>Без запаха</CheckBox>
+    <Grid x:Name="mainPanel">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2.5*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0">
+            <Label>Форма шляпки:</Label>
+            <ComboBox>
+                <ComboBoxItem>Колокольная</ComboBoxItem>
+                <ComboBoxItem>Выпуклая</ComboBoxItem>
+                <ComboBoxItem>Плоская</ComboBoxItem>
+                <ComboBoxItem>Яйцевидная</ComboBoxItem>
+                <ComboBoxItem>Вогнутая</ComboBoxItem>
+            </ComboBox>
+            <Label>Поверхность шляпки:</Label>
+            <ComboBox>
+                <ComboBoxItem>Фиброзная</ComboBoxItem>
+                <ComboBoxItem>С выемками</ComboBoxItem>
+                <ComboBoxItem>Гладкая</ComboBoxItem>
+                <ComboBoxItem>Чешуйчатая</ComboBoxItem>
+            </ComboBox>
+            <Label>Цвет шляпки:</Label>
+            <StackPanel HorizontalAlignment="Center">
+                <CheckBox>Коричневый</CheckBox>
+                <CheckBox>Бежевый</CheckBox>
+                <CheckBox>Корица</CheckBox>
+                <CheckBox>Зеленый</CheckBox>
+                <CheckBox>Розовый</CheckBox>
+                <CheckBox>Фиолетовый</CheckBox>
+                <CheckBox>Красный</CheckBox>
+                <CheckBox>Белый</CheckBox>
+                <CheckBox>Желтый</CheckBox>
+            </StackPanel>
         </StackPanel>
-        <Label>Крепление пластинок к шляпке:</Label>
-        <ComboBox>
-            <ComboBoxItem>Приросшее</ComboBoxItem>
-            <ComboBoxItem>Свободное</ComboBoxItem>
-        </ComboBox>
-        <Button Width="200" Height="30" Name="btDefineType" Click="btDefineType_Click">Определеить вид</Button>
-        <Label x:Name="labelResult"></Label>
-    </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1">
+            <Label>Крепление пластинок:</Label>
+            <ComboBox>
+                <ComboBoxItem>Приросшее</ComboBoxItem>
+                <ComboBoxItem>Свободное</ComboBoxItem>
+            </ComboBox>
+            <Label>Размер пластинок:</Label>
+            <ComboBox>
+                <ComboBoxItem>Широкие</ComboBoxItem>
+                <ComboBoxItem>Узкие</ComboBoxItem>
+            </ComboBox>
+            <Label>Запах:</Label>
+            <StackPanel HorizontalAlignment="Center">
+                <CheckBox>Миндальный</CheckBox>
+                <CheckBox>Рыбный</CheckBox>
+                <CheckBox>Мерзкий</CheckBox>
+                <CheckBox>Плесневый</CheckBox>
+                <CheckBox>Резкий</CheckBox>
+                <CheckBox>Анисовый</CheckBox>
+                <CheckBox>Без запаха</CheckBox>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="2">
+            <Label>Форма стебля:</Label>
+            <ComboBox>
+                <ComboBoxItem>Широкий</ComboBoxItem>
+                <ComboBoxItem>Узкий</ComboBoxItem>
+            </ComboBox>
+            <Label>Количество колец:</Label>
+            <ComboBox>
+                <ComboBoxItem>Нет</ComboBoxItem>
+                <ComboBoxItem>Одно</ComboBoxItem>
+                <ComboBoxItem>Два</ComboBoxItem>
+            </ComboBox>
+            <Label>Среда обитания:</Label>
+            <StackPanel HorizontalAlignment="Center">
+                <CheckBox>Трава</CheckBox>
+                <CheckBox>Листва</CheckBox>
+                <CheckBox>Луг</CheckBox>
+                <CheckBox>Тропа</CheckBox>
+                <CheckBox>Город</CheckBox>
+                <CheckBox>Отходы</CheckBox>
+                <CheckBox>Дерево</CheckBox>
+            </StackPanel>
+        </StackPanel>
+        <Button Grid.Row="1" Width="200" Height="30" Name="btDefineType" Click="btDefineType_Click">Определеить вид</Button>
+        <GroupBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Header="Результат:" Margin="10" Padding="10">
+            <TextBlock x:Name="textResult"></TextBlock>
+        </GroupBox>
+
+    </Grid>
 </Window>
